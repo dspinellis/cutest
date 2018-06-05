@@ -1,5 +1,4 @@
-#ifndef CU_TEST_H
-#define CU_TEST_H
+#pragma once
 
 #include <setjmp.h>
 #include <stdarg.h>
@@ -114,4 +113,3 @@ void CuSuiteSummary(CuSuite* testSuite, CuString* summary);
 void CuSuiteDetails(CuSuite* testSuite, CuString* details);
 int RunAllTests(void) ;
 
-#endif /* CU_TEST_H */
