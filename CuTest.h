@@ -1,5 +1,6 @@
 #pragma once
 
+#include <stddef.h>
 #include <setjmp.h>
 #include <stdarg.h>
 
@@ -11,7 +12,7 @@ extern "C" {
 
 /* CuString */
 
-char* CuStrAlloc(int size);
+char* CuStrAlloc(size_t size);
 char* CuStrCopy(const char* old);
 
 #define CU_ALLOC(TYPE)		((TYPE*) malloc(sizeof(TYPE)))
@@ -22,8 +23,8 @@ char* CuStrCopy(const char* old);
 
 typedef struct
 {
-	int length;
-	int size;
+	size_t length;
+	size_t size;
 	char* buffer;
 } CuString;
 
@@ -33,8 +34,8 @@ void CuStringRead(CuString* str, const char* path);
 void CuStringAppend(CuString* str, const char* text);
 void CuStringAppendChar(CuString* str, char ch);
 void CuStringAppendFormat(CuString* str, const char* format, ...);
-void CuStringInsert(CuString* str, const char* text, int pos);
-void CuStringResize(CuString* str, int newSize);
+void CuStringInsert(CuString* str, const char* text, size_t pos);
+void CuStringResize(CuString* str, size_t newSize);
 void CuStringDelete(CuString* str);
 
 /* CuTest */
@@ -67,8 +68,11 @@ void CuAssertStrEquals_LineMsg(CuTest* tc,
 void CuAssertIntEquals_LineMsg(CuTest* tc, 
 	const char* file, int line, const char* message, 
 	int expected, int actual);
-void CuAssertULongEquals_LineMsg(CuTest* tc,
-	const char* file, int line, const char* message,
+void CuAssertSizeTEquals_LineMsg(CuTest* tc,
+        const char* file, int line, const char* message, 
+	size_t expected, size_t actual);
+void CuAssertULongEquals_LineMsg(CuTest* tc, 
+	const char* file, int line, const char* message, 
 	unsigned long expected, unsigned long actual);
 void CuAssertDblEquals_LineMsg(CuTest* tc, 
 	const char* file, int line, const char* message, 
@@ -87,6 +91,8 @@ void CuAssertPtrEquals_LineMsg(CuTest* tc,
 #define CuAssertStrEquals_Msg(tc,ms,ex,ac)    CuAssertStrEquals_LineMsg((tc),__FILE__,__LINE__,(ms),(ex),(ac))
 #define CuAssertIntEquals(tc,ex,ac)           CuAssertIntEquals_LineMsg((tc),__FILE__,__LINE__,NULL,(ex),(ac))
 #define CuAssertIntEquals_Msg(tc,ms,ex,ac)    CuAssertIntEquals_LineMsg((tc),__FILE__,__LINE__,(ms),(ex),(ac))
+#define CuAssertSizeTEquals(tc,ex,ac)         CuAssertSizeTEquals_LineMsg((tc),__FILE__,__LINE__,NULL,(ex),(ac))
+#define CuAssertSizeTEquals_Msg(tc,ms,ex,ac)  CuAssertSizeTEquals_LineMsg((tc),__FILE__,__LINE__,(ms),(ex),(ac))
 #define CuAssertULongEquals(tc,ex,ac)         CuAssertULongEquals_LineMsg((tc),__FILE__,__LINE__,NULL,(ex),(ac))
 #define CuAssertULongEquals_Msg(tc,ms,ex,ac)  CuAssertULongEquals_LineMsg((tc),__FILE__,__LINE__,(ms),(ex),(ac))
 #define CuAssertDblEquals(tc,ex,ac,dl)        CuAssertDblEquals_LineMsg((tc),__FILE__,__LINE__,NULL,(ex),(ac),(dl))
