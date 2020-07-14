@@ -3,6 +3,10 @@
 #include <setjmp.h>
 #include <stdarg.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #define CUTEST_VERSION  "CuTest 1.5"
 
 /* CuString */
@@ -118,3 +122,6 @@ void CuSuiteSummary(CuSuite* testSuite, CuString* summary);
 void CuSuiteDetails(CuSuite* testSuite, CuString* details);
 int RunAllTests(void) ;
 
+#ifdef __cplusplus
+}
+#endif
